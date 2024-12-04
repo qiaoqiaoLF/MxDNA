@@ -4,7 +4,7 @@ This is the repository for *Model Decides How to Tokenize: Adaptive DNA Sequence
 
 ## The implementation of the Learnt Tokenization Module in MxDNA
 
-We have extracted the core implementation of the Learnt Tokenization Module and provide it here for anyone who is interested. We will release the full implementation of MxDNA once we are ready.
+We have extracted the core implementation of the Learnt Tokenization Module and provide it here for anyone who is interested. To access the full implementation, please check out the full-model branch.
 
 ### File Structure
 
