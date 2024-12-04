@@ -56,6 +56,7 @@ public:
         // Parallelize the non-maximum suppression across samples in the batch
         std::vector<std::future<void>> futures;
         for (int i = 0; i < batch_size; ++i) {
+            // Do not consider the [CLS] and [SEP] tokens
             futures.push_back(std::async(std::launch::async, &BasicUnitNMSVector::basic_unit_nms_sort_based, this, i, 1, lengths[i] - 1)); // Discard the [CLS] and [SEP] tokens
         }
         for (auto& future : futures) {
@@ -72,7 +73,7 @@ private:
     size_t batch_size, seq_len, num_experts;
 };
 
-std::pair<py::array_t<int>,py::array_t<int>> basic_unit_nms(py::array_t<float> logits_arr, py::array_t<int> expertKernelSizes_arr, py::array_t<int> attentionMask_arr)
+std::pair<py::array_t<int>,py::array_t<int>> basic_unit_nms_fn(py::array_t<float> logits_arr, py::array_t<int> expertKernelSizes_arr, py::array_t<int> attentionMask_arr)
 {
         py::buffer_info logits_buf = logits_arr.request();
         py::buffer_info expert_sizes_buf = expertKernelSizes_arr.request();
@@ -140,5 +141,5 @@ std::pair<py::array_t<int>,py::array_t<int>> basic_unit_nms(py::array_t<float> l
 }
 
 PYBIND11_MODULE(BasicUnitNMS, m) {
-    m.def("basic_unit_nms", &basic_unit_nms, "Generate basic_unit masks by applying non-maximum suppression to the logits");
+    m.def("basic_unit_nms_fn", &basic_unit_nms_fn, "Generate basic_unit masks by applying non-maximum suppression to the logits");
 }

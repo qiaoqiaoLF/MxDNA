@@ -1,41 +1,3 @@
-# MxDNA
-
-This repository contains the full implementation of **Model Decides How to Tokenize: Adaptive DNA Sequence Tokenization with MxDNA**.
-
-
-## Installation
-
-### Prerequisites
-
-Ensure you have GCC **11.2.0** or higher installed. Lower versions may work, but compatibility is not guaranteed.
-
-### Step 1: Build the `BasicUnitNMS` Kernel
-
-```bash
-cd model_source/kernel
-git clone https://github.com/pybind/pybind11.git
-mkdir build
-cd build
-cmake ..
-cmake --build .
-```
-
-### Step 2: Install Required Python Packages
-
-The following packages are required for running MxDNA. Compatibility is guaranteed with the specified versions:
-- **numpy**: `1.24.4`
-- **torch**: `1.13.1+cu117`
-- **torchvision**: `0.14.1+cu117`
-- **transformers**: `4.39.3`
-- **flash-attn**: `2.3.6`
-
-## Usage
-
-Below is an example of how to use MxDNA for masked language modeling.
-
-### Code Example
-
-```python
 from model_source.modeling_mxdna import MxDNAForMaskedLM 
 from model_source.configuration_mxdna import MxDNAConfig
 from transformers import AutoTokenizer
@@ -83,5 +45,3 @@ with torch.autocast(device_type='cuda', dtype=torch.float16):
         labels=labels, 
         load_balancing_loss=True
     )
-```
-
